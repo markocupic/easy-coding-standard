@@ -1,0 +1,28 @@
+{
+  "name": "markocupic/easy-coding-standard",
+  "description": "Adds easy coding standard to contao",
+  "keywords": [
+    "contao",
+    "bundle",
+    "tag 1",
+    "tag 2"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Marko Cupic",
+      "email": "m.cupic@gmx.ch",
+      "homepage": "https://github.com/markocupic/easy-coding-standard",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/markocupic/easy-coding-standard/issues",
+    "source": "https://github.com/markocupic/easy-coding-standard"
+  },
+  "require": {
+    "php": "^7.2",
+    "contao/easy-coding-standard": "^2.1"
+  }
+}

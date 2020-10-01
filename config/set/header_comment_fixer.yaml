@@ -1,0 +1,3 @@
+services:
+    PhpCsFixer\Fixer\Comment\HeaderCommentFixer:
+        header: "This file is part of a markocupic extension.\n\n(c) Marko Cupic 2020 <m.cupic@gmx.ch>\n\n@license MIT\n\n@see https://github.com/markocupic"
