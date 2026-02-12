@@ -17,8 +17,12 @@ namespace Markocupic\EasyCodingStandard\Sniffs;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
-class NoDumpSniff implements Sniff
+final class NoDumpSniff implements Sniff
 {
+    private const FUNCTION_NAME = 'dump';
+    private const ERROR_CODE = 'DumpDetected';
+    private const ERROR_MESSAGE = 'Found dump() usage.';
+
     public function register()
     {
         return [T_STRING];
@@ -29,23 +33,19 @@ class NoDumpSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
         $token = $tokens[$stackPtr];
 
-        // Ignore the token if it is not "dump"
-        if (strtolower($token['content']) !== 'dump') {
+        if (\strcasecmp((string)$token['content'], self::FUNCTION_NAME) !== 0) {
             return;
         }
 
-        // Make sure this is actually a dump() function call
-        $next = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
-
-        if ($tokens[$next]['code'] !== T_OPEN_PARENTHESIS) {
+        $nextPtr = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
+        if ($nextPtr === false) {
             return;
         }
 
-        // Show warning
-        $phpcsFile->addWarning(
-            'Find dump() usage!',
-            $stackPtr,
-            'DumpDetected'
-        );
+        if ($tokens[$nextPtr]['code'] !== T_OPEN_PARENTHESIS) {
+            return;
+        }
+
+        $phpcsFile->addError(self::ERROR_MESSAGE, $stackPtr, self::ERROR_CODE);
     }
 }

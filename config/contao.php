@@ -13,15 +13,14 @@ declare(strict_types=1);
  */
 
 use Markocupic\EasyCodingStandard\Sniffs\NoDumpSniff;
+use Markocupic\EasyCodingStandard\Sniffs\NoMailSniff;
+use Markocupic\EasyCodingStandard\Sniffs\NoExitOrDieSniff;
+
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 return ECSConfig::configure()
-    ->withSets([
-        //__DIR__.'/set/psr12.php',
-        //__DIR__.'/set/symfony.php',
-    ])
     ->withRules([
-       NoDumpSniff::class,
-    ])
-    //->withConfiguredRule(BlankLineBeforeStatementFixer::class, ['statements' => ['do', 'for', 'foreach', 'return', 'switch', 'throw', 'try', 'while']])
-   ;
+        NoDumpSniff::class,
+        NoMailSniff::class,
+        NoExitOrDieSniff::class,
+    ]);

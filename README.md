@@ -44,9 +44,11 @@ The package contains the following custom fixers:
 
 The package contains the following custom sniffs:
 
-| Class                                       | Description                       |
-|---------------------------------------------|-----------------------------------|
-| [`NoDumpSniff`](src/Sniffs/NoDumpSniff.php) | Prevents using dump() statements. |
+| Class                                            | Description                                |
+|--------------------------------------------------|--------------------------------------------|
+| [`NoDumpSniff`](src/Sniffs/NoDumpSniff.php)      | Prevents using dump() statements.          |
+| [`NoExitOrDieSniff`](src/Sniffs/NoExitSniff.php) | Prevents using exit() or die() statements. |
+| [`NoMailSniff`](src/Sniffs/NoMailSniff.php)      | Prevents using mail() statements.          |
 
 ## License
 
