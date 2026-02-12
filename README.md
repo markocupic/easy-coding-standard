@@ -1,13 +1,53 @@
-![Alt text](src/Resources/public/img/logo.png?raw=true "logo")
+# EasyCodingStandard configurations
 
+This package includes some custom sniffers for Markocupic projects..
 
-# Welcome to Easy Coding Standard
+## Installation
 
-```php
-vendor/bin/ecs check vendor/markocupic/example-bundle-bundle/src --fix --config vendor/markocupic/easy-coding-standard/config/default.yaml
+Add the package to your Contao installation via Composer:
+
+```bash
+composer require markocupic/easy-coding-standard --dev
 ```
 
-Use backslashes, if you run the fixer under **Windows** => (vendor\bin\ecs check):
+## Usage
+
+Create a file named `ecs.php` in the root directory of your project.
+
 ```php
-vendor\bin\ecs check vendor/markocupic/example-bundle-bundle/src --fix --config vendor/markocupic/easy-coding-standard/config/default.yaml
+<?php
+
+declare(strict_types=1);
+
+use SetList\SetList;
+use Symplify\EasyCodingStandard\Config\ECSConfig;
+
+return ECSConfig::configure()
+    ->withSets([SetList::MARKOCUPIC])
+    // Adjust the configuration according to your needs.
+;
 ```
+
+Then run the script like this:
+
+```bash
+vendor/bin/ecs check
+```
+
+## What's inside?
+
+The package contains the following custom fixers:
+
+| Class     | Description |
+|-----------|-------------|
+| --empty-- | --empty--   |
+
+The package contains the following custom sniffs:
+
+| Class                                       | Description                       |
+|---------------------------------------------|-----------------------------------|
+| [`NoDumpSniff`](src/Sniffs/NoDumpSniff.php) | Prevents using dump() statements. |
+
+## License
+
+Markocupic Easy Coding Standard is licensed under the terms of the LGPLv3.

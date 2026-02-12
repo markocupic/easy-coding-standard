@@ -1,28 +1,34 @@
 {
-  "name": "markocupic/easy-coding-standard",
-  "description": "Adds easy coding standard to contao",
-  "keywords": [
-    "contao",
-    "bundle",
-    "tag 1",
-    "tag 2"
-  ],
-  "type": "library",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Marko Cupic",
-      "email": "m.cupic@gmx.ch",
-      "homepage": "https://github.com/markocupic/easy-coding-standard",
-      "role": "Developer"
+    "name": "markocupic/easy-coding-standard",
+    "description": "EasyCodingStandard configurations for Contao",
+    "license": "LGPL-3.0-or-later",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Marko Cupic",
+            "homepage": "https://github.com/markocupic"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "symplify/easy-coding-standard": "^13.0"
+    },
+    "require-dev": {
+        "contao/rector": "^1.2",
+    },
+    "autoload": {
+        "psr-4": {
+            "Markocupic\\EasyCodingStandard\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Markocupic\\EasyCodingStandard\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
-  ],
-  "support": {
-    "issues": "https://github.com/markocupic/easy-coding-standard/issues",
-    "source": "https://github.com/markocupic/easy-coding-standard"
-  },
-  "require": {
-    "php": "^7.2",
-    "contao/easy-coding-standard": "^2.1"
-  }
 }
