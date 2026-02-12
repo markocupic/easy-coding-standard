@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "^8.1",
-        "symplify/easy-coding-standard": "^13.0"
+        "symplify/easy-coding-standard": "^12.0"
     },
     "require-dev": {
         "contao/rector": "^1.2"
