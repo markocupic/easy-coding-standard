@@ -21,6 +21,13 @@ final class NoMailSniff implements Sniff
 {
     private const FUNCTION_NAME = 'mail';
     private const ERROR_CODE = 'MailDetected';
+    private const IGNORED_PREVIOUS_TOKENS = [
+        T_DOUBLE_COLON,
+        T_OBJECT_OPERATOR,
+        T_NULLSAFE_OBJECT_OPERATOR,
+        T_FUNCTION,
+        T_NEW,
+    ];
     private const ERROR_MESSAGE = 'Found mail() usage.';
 
     public function register()
@@ -43,6 +50,13 @@ final class NoMailSniff implements Sniff
         }
 
         if ($tokens[$nextPtr]['code'] !== T_OPEN_PARENTHESIS) {
+            return;
+        }
+
+        // Ignore method calls, declarations and instantiations, e.g. $mailer->mail(), Email::mail(), function mail() or new Mail()
+        $prevPtr = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
+
+        if ($prevPtr !== false && \in_array($tokens[$prevPtr]['code'], self::IGNORED_PREVIOUS_TOKENS, true)) {
             return;
         }
 

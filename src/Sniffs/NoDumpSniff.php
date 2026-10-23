@@ -21,6 +21,14 @@ final class NoDumpSniff implements Sniff
 {
     private const FUNCTION_NAME = 'dump';
     private const ERROR_CODE = 'DumpDetected';
+    private const VAR_DUMPER_CLASS = 'VarDumper';
+    private const IGNORED_PREVIOUS_TOKENS = [
+        T_DOUBLE_COLON,
+        T_OBJECT_OPERATOR,
+        T_NULLSAFE_OBJECT_OPERATOR,
+        T_FUNCTION,
+        T_NEW,
+    ];
     private const ERROR_MESSAGE = 'Found dump() usage.';
 
     public function register()
@@ -46,6 +54,37 @@ final class NoDumpSniff implements Sniff
             return;
         }
 
+        // Ignore method calls, declarations and instantiations, e.g. Yaml::dump(), $obj->dump(), $obj?->dump(), function dump() or new Dump()
+        $prevPtr = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
+
+        if ($prevPtr !== false && \in_array($tokens[$prevPtr]['code'], self::IGNORED_PREVIOUS_TOKENS, true)) {
+            // VarDumper::dump() is a debug call as well
+            if (!$this->isVarDumperCall($phpcsFile, $prevPtr)) {
+                return;
+            }
+        }
+
         $phpcsFile->addError(self::ERROR_MESSAGE, $stackPtr, self::ERROR_CODE);
+    }
+
+    private function isVarDumperCall(File $phpcsFile, int $prevPtr): bool
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        if ($tokens[$prevPtr]['code'] !== T_DOUBLE_COLON) {
+            return false;
+        }
+
+        $classPtr = $phpcsFile->findPrevious(T_WHITESPACE, $prevPtr - 1, null, true);
+
+        if ($classPtr === false) {
+            return false;
+        }
+
+        // Covers VarDumper::dump(), \VarDumper::dump() and Symfony\Component\VarDumper\VarDumper::dump()
+        $className = ltrim((string) $tokens[$classPtr]['content'], '\\');
+        $className = substr($className, (int) strrpos('\\'.$className, '\\'));
+
+        return \strcasecmp($className, self::VAR_DUMPER_CLASS) === 0;
     }
 }
